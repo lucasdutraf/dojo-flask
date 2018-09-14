@@ -1,0 +1,2 @@
+CREATE DATABASE todo_dev;
+CREATE DATABASE todo_test;

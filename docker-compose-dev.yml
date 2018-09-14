@@ -1,0 +1,28 @@
+version: '3.6'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    volumes:
+      - './:/usr/src/app'
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_ENV=development
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@todo-db:5432/todo_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@todo-db:5432/todo_dev
+    depends_on:
+      - todo-db
+
+  todo-db:
+    build:
+      context: ./project/db
+      dockerfile: Dockerfile
+    ports:
+      - 5435:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSGRES_PASSWORD=postgres
