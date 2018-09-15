@@ -2,7 +2,6 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from project.api import todo_blueprint
 
 db = SQLAlchemy()
 
@@ -14,7 +13,5 @@ def create_app(script_info=None):
     app.config.from_object(app_settings)
 
     db.init_app(app)
-
-    app.register_blueprint(todo_blueprint)
 
     return app
