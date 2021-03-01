@@ -1,19 +1,27 @@
-FROM python:3.6.5-alpine
+# base image
+FROM python:3.8.0-alpine
 
+# install dependencies
 RUN apk update && \
     apk add --virtual build-deps gcc python-dev musl-dev && \
     apk add postgresql-dev && \
     apk add netcat-openbsd
 
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# set working directory
+WORKDIR /app
 
-COPY ./requirements.txt /usr/src/app/requirements.txt
+# add and install requirements
+RUN pip install --upgrade pip
+COPY ./requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
-COPY ./entrypoint.sh /usr/src/app/entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
+# add app
+COPY . /app
 
-COPY . /usr/src/app
+# add entrypoint.sh
+COPY ./entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
-CMD ["/usr/src/app/entrypoint.sh"]
+
+# run server
+CMD ["/app/entrypoint.sh"]

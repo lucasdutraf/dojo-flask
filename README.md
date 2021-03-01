@@ -13,3 +13,8 @@ Then:
     sudo docker-compose -f docker-compose-dev.yml up --build
     
 The api will be running at localhost:5001.
+
+## Tests
+Running tests:  
+
+    `sudo docker-compose -f docker-compose-dev.yml run api python manage.py test`
